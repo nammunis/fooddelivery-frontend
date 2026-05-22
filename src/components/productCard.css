@@ -1,0 +1,15 @@
+.card {
+  border-radius: 10px;
+  padding: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: #111827;
+}
+
+/* A sophisticated, sharp accent border instead of a colorful gradient */
+.fancy-border {
+  border: 5px solid #111827;
+  outline: 4px solid rgba(17, 24, 39, 0.05);
+}
