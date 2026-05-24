@@ -1,18 +1,27 @@
 import './App.css'
 import ProductCard from './components/productCard'
+import HomePage from './pages/homePage'
+import RegisterPage from './pages/registerPage'
+import LoginPage from './pages/loginPage'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import AdminPage from './pages/adminPage'
 
 function App() {
   
   
   return (
-    <>
-    <div className='w-full h-screen bg-green-100 flex justify-center items-center'>
-        <div className='w-[500px] h-[500px] bg-green-600/30 rounded-3xl p-2 m-10'>
-          
-        </div>
-    </div>
-    
-    </>
+    <BrowserRouter>
+          <div className='w-full h-screen bg-green-100 flex justify-center items-center'>
+            <div className='w-full h-screen flex items-center justify-center'>
+              <Routes path='/'>
+                <Route path='/' element={<HomePage/>}/>
+                <Route path='/login' element={<LoginPage/>}/>
+                <Route path='/register' element={<RegisterPage/>}/>
+                <Route path='/admin/*' element={<AdminPage/>}/>
+              </Routes>
+            </div>
+          </div>
+    </BrowserRouter>
   )
 }
 
