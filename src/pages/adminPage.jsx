@@ -4,6 +4,8 @@ import { Link, Route, Routes } from 'react-router-dom'
 import { LuLayoutDashboard, LuUsers, LuSettings } from "react-icons/lu";
 import { TbShoppingBagHeart } from "react-icons/tb";
 import { FiPackage } from "react-icons/fi";
+import ProductsAdmin from './admin/productsAdmin';
+import AddProductAdminPage from './admin/addProductAdminPage';
 
 export default function AdminPage() {
   return (
@@ -34,8 +36,9 @@ export default function AdminPage() {
       <div className='w-[80%] h-full bg-gray-100 p-6'>
           <Routes>
               <Route path='/' element={<h1>Dashboard</h1>}/>
-              <Route path='/products' element={<h1>Products</h1>}/>
+              <Route path='/products' element={<ProductsAdmin/>}/>
               <Route path='/orders' element={<h1>Orders</h1>}/>
+              <Route path='/newProduct' element={<AddProductAdminPage/>}/>
           </Routes>
       </div>
     </div>
