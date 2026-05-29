@@ -1,51 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { BiPlug, BiPlus } from 'react-icons/bi'
 import axios from 'axios'
-
-
+import { MdDeleteForever } from "react-icons/md";
+import toast from 'react-hot-toast';
 
 const sampleProduct = [
   {
-    "productId": "FOOD-001",
-    "productName": "Classic Cheeseburger",
-    "altName": ["Cheese Burger", "Beef Burger"],
-    "labelledPrice": 12.99,
-    "price": 9.99,
-    "images": ["/images/cheeseburger.jpg"],
-    "description": "Juicy grilled beef patty topped with melted cheddar cheese, fresh lettuce, and tomatoes on a toasted brioche bun.",
-    "stock": 50,
+    "productId": "",
+    "productName": "",
+    "altName": [""],
+    "labelledPrice": 0,
+    "price": 0,
+    "images": [""],
+    "description": "",
+    "stock": 0,
     "isAvailable": true,
-    "catagory": "Burgers"
-  },
-  {
-    "productId": "FOOD-002",
-    "productName": "Pepperoni Feast Pizza",
-    "altName": ["Pepperoni Pizza"],
-    "labelledPrice": 18.50,
-    "price": 14.99,
-    "images": ["/images/pepperoni-pizza.jpg"],
-    "description": "12-inch stone-baked crust loaded with premium pepperoni slices, mozzarella cheese, and rich Italian tomato sauce.",
-    "stock": 35,
-    "isAvailable": true,
-    "catagory": "Pizza"
-  },
-  {
-    "productId": "FOOD-003",
-    "productName": "Crunchy Caesar Salad",
-    "altName": ["Caesar Salad"],
-    "labelledPrice": 10.00,
-    "price": 8.50,
-    "images": ["/images/caesar-salad.jpg"],
-    "description": "Crisp romaine lettuce tossed in creamy Caesar dressing, topped with garlic croutons and freshly grated parmesan cheese.",
-    "stock": 20,
-    "isAvailable": true,
-    "catagory": "Salads"
+    "catagory": "0"
   }
 ]
 
 export default function ProductsAdmin() {
   const [products,setProducts] = useState(sampleProduct)
+  const [a,setA] = useState(0);
+  
   useEffect(
     ()=>{
       axios.get(import.meta.env.VITE_backendUrl+'/products').then((res)=>{
@@ -56,44 +34,73 @@ export default function ProductsAdmin() {
         }
       )
     },
-    []
+    [a]
   )
-
+  const navigate = useNavigate()
+  
 
   return (
     <div className='w-full h-[100%] rounded-[1%] p-5 bg-blue-50 text-gray-900'>
+        
+        <h1 className='text-2xl font-bold mb-5 text-slate-800'>Products Dashboard</h1>
 
-        <table>
+        <table className='w-[100%] text-left border-collapse bg-white rounded-lg shadow-sm overflow-hidden'>
           <thead>
-            <tr>
-              <th className='p-[5px]'>Image</th>
-              <th className='p-[5px]'>Product Id</th>
-              <th className='p-[5px]'>Product Name</th>
-              <th className='p-[5px]'>Price</th>
-              <th className='p-[5px]'>Labled Price</th>
-              <th className='p-[5px]'>Catogory</th>
-              <th className='p-[5px]'>Stock</th>
-              <th className='p-[5px]'>Action</th>
+            <tr className='bg-blue-100 border-b border-blue-200 text-xs font-semibold text-slate-700 uppercase tracking-wider' >
+              <th className='p-[10px] text-left'>Image</th>
+              <th className='p-[10px] text-left'>Product Id</th>
+              <th className='p-[10px] text-left'>Product Name</th>
+              <th className='p-[10px] text-left'>Price</th>
+              <th className='p-[10px] text-left'>Labled Price</th>
+              <th className='p-[10px] text-left'>Catogory</th>
+              <th className='p-[10px] text-left'>Stock</th>
+              <th className='p-[10px] text-left'>Action</th>
             </tr>
           </thead>
           <tbody>
             {
-              products.map(
+              products && products.map(
                 (product,index)=>{
                   return(
-                    <tr key={index}>
-                      <td className='p-[5px]'>
-                        <img src={product.images[0]} alt={product.productName} 
-                        className='w-[50px] object-cover'
+                    <tr key={index} className='border-b border-gray-100 hover:bg-blue-50/50 transition-colors'>
+                      <td className='p-[10px]'>
+                        <img src={product.images?.[0] || '/default-product.jpg'} alt={product.productName} 
+                        className='w-[50px] h-[50px] object-cover rounded'
                         />
                       </td>
-                      <td className='p-[5px]'>{product.productId}</td>
-                      <td className='p-[5px]'>{product.productName}</td>
-                      <td className='p-[5px]'>{product.price}</td>
-                      <td className='p-[5px]'>{product.labelledPrice}</td>
-                      <td className='p-[5px]'>{product.catagory}</td>
-                      <td className='p-[5px]'>{product.stock}</td>
-                      <td className='p-[5px]'>Not Set</td>
+                      <td className='p-[10px]'>{product.productId}</td>
+                      <td className='p-[10px]'>{product.productName}</td>
+                      <td className='p-[10px]'>${product.price}</td>
+                      <td className='p-[10px]'>${product.labelledPrice}</td>
+                      <td className='p-[10px]'>{product.catagory}</td>
+                      <td className='p-[10px]'>{product.stock}</td>
+                      <td className='p-[10px]'> 
+                        <MdDeleteForever className='bg-red-500 text-white p-1 rounded cursor-pointer text-3xl shadow-md hover:bg-red-600 transition-colors' 
+                        onClick={()=>{
+                          const token = localStorage.getItem('token')
+                          if(token==null){
+                            navigate('/login')
+                            return
+                          }
+                          axios.delete(import.meta.env.VITE_backendUrl+'/products/'+product.productId,
+                            {
+                              headers:{
+                                Authorization:`Bearer ${token}`
+                              }
+                            }
+                          ).then(
+                            (res)=>{
+                              toast.success('Deleted Successfully!')
+                              setA(a+1)
+                            }
+                          ).catch(
+                            (err)=>{
+                              toast.error("Deleted Faild!")
+                            }
+                          )
+                        }}
+                        />
+                      </td>
 
                     </tr>
                   )
