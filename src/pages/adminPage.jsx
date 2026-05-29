@@ -33,7 +33,7 @@ export default function AdminPage() {
         </Link>     
       </div>
 
-      <div className='w-[80%] h-full bg-gray-100 p-6'>
+      <div className='w-[80%] h-full bg-white p-6'>
           <Routes>
               <Route path='/' element={<h1>Dashboard</h1>}/>
               <Route path='/products' element={<ProductsAdmin/>}/>

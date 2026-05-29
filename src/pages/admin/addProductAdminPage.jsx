@@ -4,6 +4,7 @@ import { IoBagAddOutline } from "react-icons/io5";
 import { PiBackspaceBold } from "react-icons/pi";
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import UploadFile from '../../utils/mediaUpload';
 
 export default function AddProductAdminPage() {
     const [productId,setProductId] = useState('')
@@ -13,12 +14,27 @@ export default function AddProductAdminPage() {
     const [catagory,setCatagory] = useState('Sri Lankans Foods')
     const [labelledPrice,setlabelledPrice] = useState('')
     const [price,setPrice] = useState('')
-    const [image,setImage] = useState('')
+    const [image,setImage] = useState([])
     const [description,setDescription] = useState('')
     const [isAvailable,setIsAvailable] = useState(true)
     const navigate = useNavigate()
 
-    function handleSubmit(){
+    async function handleSubmit(){
+
+        const promisesArray = []
+
+        for(let i=0;i<image.length; i++){
+            
+            const promise = UploadFile(image[i])
+            promisesArray[i]= promise
+            
+        }
+        
+        const reponses = await Promise.all(promisesArray)
+        console.log(reponses)
+        
+
+
         const altNamesInArray = alternativeName.split(',')
         const productData = {
             productId:productId,
@@ -26,7 +42,7 @@ export default function AddProductAdminPage() {
             altName:altNamesInArray,
             labelledPrice:labelledPrice,
             price:price,
-            image:image,
+            images:reponses,
             description:description,
             stock:stock,
             isAvailable:isAvailable,
@@ -93,7 +109,9 @@ export default function AddProductAdminPage() {
                     <option value="Pakisthan Foods">Pakisthan Foods</option>                    
                 </select>                
                 <label>Images: </label>
-                <input type="text" value={image} onChange={(e)=>{setImage(e.target.value)}} placeholder='Upload Images' className='w-full text-gray-900 font-bold bg-transparent border-b-2 border-blue-400 outline-none pb-2' />
+                <input type="file" 
+                multiple
+                onChange={(e)=>{setImage(e.target.files)}} placeholder='Upload Images' className='w-full text-gray-900 font-bold bg-transparent border-b-2 border-blue-400 outline-none pb-2' />
                 <label>Description: </label>
                 <textarea type="text" value={description} onChange={(e)=>{setDescription(e.target.value)}} placeholder='Rice Ingredients' className='w-full  text-gray-900 font-bold bg-transparent border-b-2 border-blue-400 outline-none pb-2' />
                 <label>Is Available: </label>
