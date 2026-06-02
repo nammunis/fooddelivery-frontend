@@ -22,11 +22,13 @@ const sampleProduct = [
 
 export default function ProductsAdmin() {
 const [products,setProducts] = useState(sampleProduct)
-const [a,setA] = useState(0);
+const [isLoading,setIsLoading] =useState(true)
+//const [a,setA] = useState(0);
 
 useEffect(
   ()=>{
-    const token = localStorage.getItem('token')
+    if(isLoading){
+          const token = localStorage.getItem('token')
 
     axios.get(import.meta.env.VITE_backendUrl+'/products', {
       headers: {
@@ -34,13 +36,16 @@ useEffect(
       }
     }).then((res)=>{
       setProducts(res.data)
+      setIsLoading(false)
     }).catch(
       (err)=>{
         console.log(err)
       }
     )
+  }
+    
   },
-  [a]
+  [isLoading]
 )
 const navigate = useNavigate()
   
@@ -122,7 +127,7 @@ const navigate = useNavigate()
                               ).then(
                                 (res)=>{
                                   toast.success('Deleted Successfully!')
-                                  setA(a+1)
+                                  setIsLoading(!isLoading)
                                 }
                               ).catch(
                                 (err)=>{
