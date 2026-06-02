@@ -41,22 +41,44 @@ export default function LoginPage() {
   }
 
   return (
-    <div className='w-full h-screen bg-neutral-950 flex justify-center items-center'>
-      <div className='w-[30%] h-[50%] backdrop-blur-2xl shadow-2xl shadow-blue-400/20 rounded-2xl border-1 border-blue-500 flex flex-col justify-center items-center p-6'>
-        <IoLogIn className='text-amber-50 text-5xl' />
-        <span className='text-2xl text-amber-50 text-center pt-2'>Login to your Account</span>
+    <div className='w-full min-h-screen bg-neutral-950 flex justify-center items-center p-4'>
+      <div className='w-full max-w-md backdrop-blur-md bg-neutral-900/40 shadow-2xl shadow-blue-500/10 rounded-2xl border border-neutral-800 flex flex-col justify-center items-center p-6 md:p-8'>
+        <div className='w-14 h-14 bg-blue-500/10 border border-blue-500/20 rounded-xl flex justify-center items-center shadow-lg shadow-blue-500/5'>
+          <IoLogIn className='text-blue-400 text-3xl' />
+        </div>
+        
+        <span className='text-xl md:text-2xl font-black text-white text-center mt-4 tracking-wide'>Login to your Account</span>
     
-        <div className='w-full px-6 mt-6 flex flex-col justify-center items-center'>
-          <input  onChange={(e)=>{
-            setEmail(e.target.value)
-          }} 
-            type="email" placeholder="Username or Email" className='w-[80%] text-amber-50 bg-transparent border-b-2 border-blue-400 outline-none pb-2'/>
-          <input onChange={(e)=>{
-            setPassword(e.target.value)
-          }} 
-            type="password" placeholder="Password" className='w-[80%] text-amber-50 bg-transparent border-b-2 border-blue-400 outline-none pt-4 pb-2'/>
-          <button onClick={loging} type="submit" className='w-[80%] h-[30%] text-xl pb-1 pt-1 bg-blue-500 text-amber-50 rounded-2xl m-5'>Login In</button>
-          <p className='text-white'>Don't have an account? <Link to='/register' className='text-blue-500 font-bold'>Creat an Account </Link>from here</p>
+        <div className='w-full flex flex-col gap-5 mt-8'>
+          <div className='flex flex-col gap-1.5'>
+            <input  
+              onChange={(e)=>{setEmail(e.target.value)}} 
+              type="email" 
+              placeholder="Username or Email" 
+              className='w-full text-base font-semibold text-white bg-neutral-900/60 border border-neutral-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 rounded-xl px-4 py-3 outline-none transition-all placeholder:text-neutral-500 shadow-sm'
+            />
+          </div>
+
+          <div className='flex flex-col gap-1.5'>
+            <input 
+              onChange={(e)=>{setPassword(e.target.value)}} 
+              type="password" 
+              placeholder="Password" 
+              className='w-full text-base font-semibold text-white bg-neutral-900/60 border border-neutral-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 rounded-xl px-4 py-3 outline-none transition-all placeholder:text-neutral-500 shadow-sm'
+            />
+          </div>
+
+          <button 
+            onClick={loging} 
+            type="submit" 
+            className='w-full py-3 px-4 mt-2 text-base font-bold bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white rounded-xl shadow-md shadow-blue-600/10 transition-all cursor-pointer'
+          >
+            Log In
+          </button>
+
+          <p className='text-sm text-neutral-400 text-center mt-2 font-medium'>
+            Don't have an account? <Link to='/register' className='text-blue-400 hover:text-blue-300 font-bold transition-colors ml-1'>Create an Account</Link>
+          </p>
         </div>
       </div>
     </div>
