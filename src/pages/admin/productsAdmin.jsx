@@ -4,6 +4,7 @@ import { BiEdit, BiPlug, BiPlus } from 'react-icons/bi'
 import axios from 'axios'
 import { MdDeleteForever } from "react-icons/md";
 import toast from 'react-hot-toast';
+import Loader from '../../components/loader';
 
 const sampleProduct = [
   {
@@ -56,7 +57,7 @@ const navigate = useNavigate()
         <h1 className='text-xl md:text-2xl font-black mb-5 text-slate-800 tracking-wide'>Products Dashboard</h1>
 
         <div className='w-full overflow-x-auto rounded-xl border border-slate-200/80 shadow-sm bg-white'>
-          <table className='w-full text-left border-collapse min-w-[800px]'>
+          {(isLoading)?(<Loader/>):(<table className='w-full text-left border-collapse min-w-[800px]'>
             <thead>
               <tr className='bg-slate-100/80 border-b border-slate-200 text-xs font-bold text-slate-600 uppercase tracking-wider' >
                 <th className='p-3 md:p-4 text-left'>Image</th>
@@ -144,7 +145,7 @@ const navigate = useNavigate()
                 )
               }
             </tbody>
-          </table>
+          </table>)}
         </div>
         
         <Link to='/admin/newProduct' className='fixed right-6 bottom-20 md:bottom-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg shadow-blue-600/30 hover:scale-105 active:scale-95 transition-all p-3 z-40 cursor-pointer flex items-center justify-center'>
