@@ -7,6 +7,7 @@ import { FiPackage } from "react-icons/fi";
 import ProductsAdmin from './admin/productsAdmin';
 import AddProductAdminPage from './admin/addProductAdminPage';
 import UpdateProductAdminPage from './admin/updateProduct.jsx';
+import OrderPage from './admin/orderPage.jsx';
 
 export default function AdminPage() {
   return (
@@ -38,7 +39,7 @@ export default function AdminPage() {
           <Routes>
               <Route path='/' element={<h1>Dashboard</h1>}/>
               <Route path='/products' element={<ProductsAdmin/>}/>
-              <Route path='/orders' element={<h1>Orders</h1>}/>
+              <Route path='/orders' element={<OrderPage/>}/>
               <Route path='/newProduct' element={<AddProductAdminPage/>}/>
               <Route path='/updateproduct' element={<UpdateProductAdminPage/>}/>
           </Routes>

@@ -1,15 +1,17 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ProductLoader } from '../../components/productLoading';
 import ImageSlider from '../../components/imgeSlider';
 import { div, span } from 'motion/react-client';
 import { BsCart3 } from "react-icons/bs";
+import { addToCart, getCart } from '../../utils/cart';
 
 
 export default function ProductOverviewPage() {
      const params = useParams()
+     const navigate = useNavigate()
      const [product,setProduct] = useState(null);
      const [status,setStatus] = useState('Loading') //Loading,Success or Error
      useEffect(()=>{
@@ -55,8 +57,31 @@ export default function ProductOverviewPage() {
             }
             </div>
             <div className='w-full flex flex-row justify-center items-center mt-[5px] gap-1'>
-              <button className='cursor-pointer shadow-2xl rounded-2xl  shadow-amber-300 bg-amber-600 text-gray-900'>Buy Now</button>
-              <button className='cursor-pointer shadow-2xl rounded-2xl shadow-amber-300 bg-amber-600 text-gray-900'><BsCart3 />Add to cart</button>
+              <button className='cursor-pointer shadow-2xl rounded-2xl  shadow-amber-300 bg-amber-600 text-gray-900'
+              onClick={
+                ()=>{
+                  navigate('/checkout',{state:{item:
+                    [
+                      {
+                        productId:product.productId,
+                        quantity:1,
+                        name:product.productName,
+                        image:product.images[0],
+                        price:product.price
+
+                      }
+                    ]
+                  }})
+                }
+              }
+              >Buy Now</button>
+              <button className='cursor-pointer shadow-2xl rounded-2xl shadow-amber-300 bg-amber-600 text-gray-900' onClick={
+                ()=>{
+                  addToCart(product,1)
+                  toast.success('Product add successfully!')
+                  console.log(getCart)
+                }
+              }><BsCart3 />Add to cart</button>
             </div>
 
           </div>
