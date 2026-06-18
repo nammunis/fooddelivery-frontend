@@ -9,7 +9,6 @@ export default function PageInator(props) {
       <select className='w-[110px] h-[40px] border border-amber-500 rounded-lg p-[8px] bg-white text-gray-700 font-semibold cursor-pointer outline-none focus:border-amber-600 transition-all' 
       value={currentPage} onChange={
         (e)=>{
-            // පිටුව මාරු කිරීමේදීද loading true කරන ලදී
             setLoading(true)
             setCurrentPage(parseInt(e.target.value))
         }
